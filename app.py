@@ -15,7 +15,7 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 
 # REMEMBER TO LOAD THE MODEL AND THE SCALER!
-model_malaria = load_model("malaria_detector.h5")
+model_malaria = load_model("malaria_detector95.h5")
 
 
 def allowed_image(filename):
