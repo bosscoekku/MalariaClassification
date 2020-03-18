@@ -1,0 +1,117 @@
+<head>
+  <title>Malaria prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    .column {
+      float: left;
+      width: 25.33%;
+      padding: 5px;
+    }
+    
+    /* Clearfix (clear floats) */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    </style>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='mystyle.css') }}">
+    </head>
+<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+<div class="file-upload">
+  <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">เพิ่มรูปภาพ</button>
+
+  <div class="image-upload-wrap">
+    <form action="/upload_image" method="POST" enctype="multipart/form-data">
+    <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="image" id="image" oninput="filesize(this);" />
+    <div class="drag-text">
+      <h3>Drag and drop a file or select add Image</h3>
+    </div>
+  </div>
+  
+  <div class="file-upload-content">
+    <img class="file-upload-image" src="#" alt="your image"  style="width:500px;height:600px;"/>
+    <div class="image-title-wrap">
+      <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+    </div>
+    <div class="image-title-wrap2">
+      <button type="submit"  style="background-color:#BDA20E; border-color:red; color:white" class="remove-image">Prediction Image</span></button> 
+    </div>
+  </form>
+    
+  </div>
+  <br>
+  <b>Example</b>
+  <div class="row">
+    <div class="column">
+      <img src="static/C1_thinF_IMG_20150604_104722_cell_81.png" alt="Snow" style="width:100%">
+    </div>
+    <div class="column">
+      <img src="static/C37BP2_thinF_IMG_20150620_133111a_cell_87.png" alt="Forest" style="width:100%">
+    </div>
+    <div class="column">
+      <img src="static/C98P59ThinF_IMG_20150917_154452_cell_111.png" alt="Mountains" style="width:100%">
+    </div>
+  </div>
+  <br>
+  <b>Thank you dataset from NIH.</b>
+</div>
+
+
+<script>
+  
+  function filesize(elem){
+    document.cookie = `filesize=${elem.files[0].size}`
+  }
+
+    function readURL(input) {
+  if (input.files && input.files[0]) {
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('.image-upload-wrap').hide();
+
+      $('.file-upload-image').attr('src', e.target.result);
+      $('.file-upload-content').show();
+
+      $('.image-title').html(input.files[0].name);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+
+  } else {
+    removeUpload();
+  }
+}
+
+function removeUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').hide();
+  $('.image-upload-wrap').show();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+});
+
+function okUpload() {
+  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+  $('.file-upload-content').show();
+  $('.image-upload-wrap').hide();
+}
+$('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+});
+</script>
