@@ -16,5 +16,5 @@ python app.py # run server
 [Web Demo](https://malaria-classification.herokuapp.com/)
 
 
-## Infromation
+## My Facebook
 [Facebook](https://web.facebook.com/BossCoEKKU)
