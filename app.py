@@ -1,5 +1,7 @@
 import os
 import cv2
+import logging
+import logging.config
 import numpy as np  
 from tensorflow.keras.models import load_model
 from werkzeug.utils import secure_filename
@@ -18,8 +20,15 @@ app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 model_malaria = load_model("malaria_detector95.h5")
 
 
-def allowed_image(filename):
+logger = logging.getLogger()
 
+log_format = '%(asctime)s %(filename)s: %(message)s'
+logging.basicConfig(filename="modelLog.log", format=log_format,
+                    datefmt='%Y-%m-%d %H:%M:%S',level=logging.DEBUG)
+
+
+def allowed_image(filename):
+    logger.info("__allowed_image__ - INFO - File name :"+str(filename))
     if not "." in filename:
         return False
 
@@ -32,7 +41,7 @@ def allowed_image(filename):
 
 
 def allowed_image_filesize(filesize):
-
+    logger.info("__allowed_image_filesize__ - INFO - File size :"+str(filesize))
     if int(filesize) <= app.config["MAX_IMAGE_FILESIZE"]:
         return True
     else:
@@ -66,27 +75,27 @@ def upload_image():
             image = request.files["image"]
 
             if image.filename == "":
-                print("No filename")
+                logger.info("__upload_image__ - ERROR - No filename")
                 return redirect(request.url)
 
             if allowed_image(image.filename):
                 filename = secure_filename(image.filename)
                 path_img = os.path.join(app.config["IMAGE_UPLOADS"], filename)
-                print(path_img)
+                logger.info("__upload_image__ - INFO - Path image :"+str(path_img))
                 image.save(path_img)
-                print("Image saved")
+                logger.info("__upload_image__ - INFO - Save image :"+str(path_img))
                 new_image = load_cv2(path_img)
                 # check prediction
                 classes = model_malaria.predict(new_image)
                 msg_result = f"Class probability :{format(classes[0][0]*100.0,'.2f')} %"
-                print(msg_result)
+                logger.info("__upload_image__ - INFO - Result model prediction :"+str(msg_result))
                 if classes[0][0]*100.0<50:
                     results = "Parasitized"
                 else:
                     results = "Uninfected"
 
             else:
-                print("That file extension is not allowed")
+                logger.info("__upload_image__ - ERROR - That file extension is not allowed")
                 return "<h1 style='color: red;'>That file extension is not allowed!</h1>"
     
     return render_template('prediction.html',results=results,pathImage = path_img,msg = msg_result)

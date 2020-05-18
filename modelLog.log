@@ -1,0 +1,9 @@
+2020-05-19 00:01:18 _internal.py: 127.0.0.1 - - [19/May/2020 00:01:18] "[37mPOST /forward HTTP/1.1[0m" 200 -
+2020-05-19 00:01:18 _internal.py: 127.0.0.1 - - [19/May/2020 00:01:18] "[37mGET /forward HTTP/1.1[0m" 200 -
+2020-05-19 00:01:21 app.py: __allowed_image__ -INFO- File name :C37BP2_thinF_IMG_20150620_133111a_cell_87.png
+2020-05-19 00:01:21 app.py: __upload_image__ - INFO - Path image :static\C37BP2_thinF_IMG_20150620_133111a_cell_87.png
+2020-05-19 00:01:21 app.py: __upload_image__ - INFO - Save image :static\C37BP2_thinF_IMG_20150620_133111a_cell_87.png
+2020-05-19 00:01:22 app.py: __upload_image__ - INFO - Result model prediction :Class probability :0.04 %
+2020-05-19 00:01:22 _internal.py: 127.0.0.1 - - [19/May/2020 00:01:22] "[37mPOST /upload_image HTTP/1.1[0m" 200 -
+2020-05-19 00:01:23 _internal.py: 127.0.0.1 - - [19/May/2020 00:01:23] "[37mPOST /forward HTTP/1.1[0m" 200 -
+2020-05-19 00:01:23 _internal.py: 127.0.0.1 - - [19/May/2020 00:01:23] "[37mGET /forward HTTP/1.1[0m" 200 -
